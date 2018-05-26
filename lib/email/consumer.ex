@@ -5,12 +5,12 @@ defmodule Email.Consumer do
 
   use EspEx.Handler
 
-  alias Email.Events, as: Event
+  alias Email.Events
   alias BrokenStore, as: MessageStore
 
   def handle(
-        %Event.Reserved{user_id: id} = reserved,
-        %{stream_name: %{identifier: email}},
+        %Events.Reserved{user_id: id} = reserved,
+        %{stream_name: %{identifier: email}} = old_raw,
         _
       ) do
     stream_name = EspEx.StreamName.new("user", id)
@@ -19,9 +19,18 @@ defmodule Email.Consumer do
     unless User.signed_up?(user) do
       expected_version = EspEx.MessageStore.to_expected_version(version)
 
-      %User.Events.SignedUp{email: email, time: reserved.time}
+      %User.Events.SignedUp{id: id, email: email, time: reserved.time}
       |> EspEx.Event.to_raw_event(stream_name)
+      |> EspEx.RawEvent.caused_by(old_raw)
       |> MessageStore.write!(expected_version)
     end
+  end
+
+  def handle(
+        %Events.Released{user_id: id},
+        %{stream_name: %{identifier: email}},
+        _
+      ) do
+    IO.puts("User #{id} closed his account, #{email} is now free again")
   end
 end

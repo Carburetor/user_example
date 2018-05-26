@@ -4,7 +4,7 @@ defmodule Email.Projection do
   alias Email.Events, as: Event
 
   def apply(%Email{} = email, %Event.Reserved{} = reserved) do
-    Email.reserve(email, reserved.time)
+    Email.reserve(email, reserved.time, reserved.reservation_number)
   end
 
   def apply(%Email{} = email, %Event.Released{}) do

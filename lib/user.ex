@@ -19,6 +19,7 @@ defmodule User do
     user
     |> Map.put(:email, email)
     |> Map.put(:signed_up_time, signed_up_time)
+    |> Map.put(:close_time, nil)
   end
 
   def signed_up?(%__MODULE__{signed_up_time: nil}), do: false

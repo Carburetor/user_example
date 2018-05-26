@@ -9,13 +9,13 @@ defmodule BrokenStore do
 
   @impl EspEx.MessageStore
   def write!(raw_event, expected_version \\ nil) do
-    maybe_raise!
+    # maybe_raise!
     Postgres.write!(raw_event, expected_version)
   end
 
   @impl EspEx.MessageStore
   def write_batch!(raw_events, stream_name, expected_version \\ nil) do
-    maybe_raise!
+    # maybe_raise!
     Postgres.write_batch!(raw_events, stream_name, expected_version)
   end
 

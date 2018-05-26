@@ -2,7 +2,7 @@ defmodule User.Events do
   use EspEx.EventTransformer
 
   defmodule SignedUp do
-    defstruct [:email, :time]
+    defstruct [:id, :email, :time]
   end
 
   defmodule Closed do
