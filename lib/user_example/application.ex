@@ -8,18 +8,9 @@ defmodule UserExample.Application do
   def start(_type, _args) do
     # List all child processes to be supervised
     children = [
-      %{
-        id: Email.Consumer,
-        start: {GenServer, :start_link, [Email.Consumer, nil]}
-      },
-      %{
-        id: User.Consumer,
-        start: {GenServer, :start_link, [User.Consumer, nil]}
-      },
-      %{
-        id: User.Commands.Consumer,
-        start: {GenServer, :start_link, [User.Commands.Consumer, nil]}
-      }
+      {Email.Consumer, nil},
+      {User.Consumer, nil},
+      {User.Commands.Consumer, nil}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

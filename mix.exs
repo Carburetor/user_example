@@ -22,7 +22,7 @@ defmodule UserExample.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:esp_ex, git: "https://github.com/Carburetor/esp_ex", tag: "1.0.0"},
+      {:esp_ex, git: "https://github.com/Carburetor/esp_ex", tag: "1.0.1"},
       {:jason, "~> 1.0.0"},
       {:uuid, "~> 1.1"}
     ]
